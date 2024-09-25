@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
-use App\Models\UserModel;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
@@ -12,15 +14,20 @@ class UserController extends Controller
 {
     public function index($id = null)
     {
+        // dd(Auth::user()->role_id);
+
         $city = City::all();
+       $role = Role::all();
         return view('components.add-data.add-user', [
-            'city' => $city
+            'city' => $city,
+            'role' => $role
         ]);
+      
     }
     public function show($id = null)
     {
-        $user = UserModel::with('city')->get(); // Load city relationship
-        $editUser = $id ? UserModel::findOrFail($id) : null; // Jika ada ID, ambil data user untuk di-edit
+        $user = User::with('city')->get(); // Load city relationship
+        $editUser = $id ? User::findOrFail($id) : null; // Jika ada ID, ambil data user untuk di-edit
         return view('components.add-data.read-data.user-list', [
             'user' => $user,
             'editUser' => $editUser // Mengirimkan data user yang akan diedit jika ada
@@ -39,6 +46,7 @@ class UserController extends Controller
             'password' => 'required|string|min:8|max:20',
             'birthday' => 'required|date|',
             'cities_id' => 'required|string',
+            'role_id' => 'required|string',
         ], [
             'name.required' => 'Name field is required',
             'image.required' => 'image field is required',
@@ -51,6 +59,7 @@ class UserController extends Controller
             'birthday.required' => 'Date field is required',
             'birthday.date' => 'Date format not valid',
             'cities_id.required' => 'Cities has to select',
+            'role_id.required' => 'role has to select',
         ]);
 
         if ($request->hasFile('image')) {
@@ -65,26 +74,28 @@ class UserController extends Controller
             $user['image'] = $filename; 
         }
 
-        $usermodel = new UserModel();
-        $usermodel->name = $request->name;
-        $usermodel['image'] = $filename;
-        $usermodel->email = $request->email;
-        $usermodel['password'] = Hash::make($request->password);
-        $usermodel->birthday = $request->birthday;
-        $usermodel->cities_id = $request->cities_id;
-        $usermodel->save();
+        $user = new User();
+        $user->name = $request->name;
+        $user['image'] = $filename;
+        $user->email = $request->email;
+        $user['password'] = Hash::make($request->password);
+        $user->birthday = $request->birthday;
+        $user->cities_id = $request->cities_id;
+        $user->role_id = $request->role_id;
+        $user->save();
 
         return redirect()->route('user-list.show')->with('success', 'User Data has been added.');
     } 
     public function detail($id){
-       $user = UserModel::findOrFail($id);
+       $user = User::findOrFail($id);
 
        return view('user-list.show', compact('user'));
     }
     public function edit($id)
     {
-        $user = UserModel::find($id); // Mengambil data user berdasarkan ID
-        $city = City::all(); // Mengambil semua data kota
+        $user = User::find($id); 
+        $city = City::all(); 
+        $role = Role::all(); 
     
         if (!$user) {
             return redirect()->route('user-list.show')->with('error', 'User not found');
@@ -93,25 +104,26 @@ class UserController extends Controller
         // Kirim data user dan city ke view edit
         return view('components.add-data.add-user', [
             'user' => $user,
-            'city' => $city // Kirimkan data kota ke view
+            'city' => $city,
+            'role' => $role
         ]);
     }
     
     public function update(Request $request, $id)
     {
-        $user = UserModel::find($id);
+        $user = User::find($id);
     
         // Validate input
         $request->validate([
             'name' => 'required|string|max:255',
-            'image' => 'nullable|mimes:png,jpeg,jpg', // Image is nullable, but if provided, check format
-            'email' => 'required|email|unique:user_models,email,'. $id,
-            'password' => 'nullable|string|min:8|max:20', // Password can be null
+            'image' => 'nullable|mimes:png,jpeg,jpg', 
+            'email' => 'required|email|unique:users,email,'. $id,
+            'password' => 'nullable|string|min:8|max:20', 
             'birthday' => 'required|date',
-            'cities_id' => 'required|exists:cities,id', // Check cities ID exists in the cities table
+            'cities_id' => 'required|exists:cities,id', 
+            'role_id' => 'required|exists:role,id',
         ]);
     
-        // Handle image upload
         if ($request->hasFile('image')) {
             $image = $request->file('image');
              $filename = str_replace(' ','_', $request->name) . '.'. $image->getClientOriginalExtension();
@@ -124,19 +136,19 @@ class UserController extends Controller
             $user['image'] = $filename; 
         }
     
-        // Update user details
+     
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         
-        // Only update the password if it's provided
+        
         if ($request->filled('password')) {
             $user['password'] = Hash::make($request->input('password'));
         }
     
         $user->birthday = $request->input('birthday');
         $user->cities_id = $request->input('cities_id');
+        $user->role_id = $request->input('role_id');
         
-        // Save updated user data
         $user->save();
     
         return redirect()->route('user-list.show')->with('success', 'User updated successfully');
@@ -144,11 +156,16 @@ class UserController extends Controller
     
 
     public function delete($id) {
-        $user = UserModel::find($id);  // Mengacu ke tabel user_model
+        $user = User::find($id);  // Mengacu ke tabel user_model
         $user->delete();
         return redirect()->route('user-list.show')->with('success', 'User has been deleted');
     }
+public function role(){
+    $role = Role::all();
 
+    // Kirim data ke view
+    return view('components.add-data.read-data.role', ['role' => $role]);
+}
 
 
 }

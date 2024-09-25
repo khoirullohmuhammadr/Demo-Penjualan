@@ -5,19 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class City extends Model
+class Role extends Model
 {
     use HasFactory;
 
-    protected $table = 'cities';
-
-    public function userData()
+    public function user()
     {
-        return $this->belongsTo(User::class, 'cities_id');
-
-
+        return $this->belongsTo(User::class, 'role_id');
     }
+    protected $table = 'role';
+
     protected $fillable = [
-        'city_name',
+        'role',
     ];
 }

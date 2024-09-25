@@ -34,52 +34,43 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Stok added history:</h1>
+              <h1>Roles</h1>
             </div>
         
-            <div class="col-sm-6">
-              @if (session('success'))
-          <div id="alert" class="alert alert-success">
-            {{ session('success') }}
-          </div>
-        @endif
-            </div>
+        
           </div>
         </div><!-- /.container-fluid -->
       </section>
 
       <!-- Main content -->
        <div class="justify-content-lg-center" style="width:100%; padding:0 5vw;">
-         @include('components.add-data.stok-management.read-stok.table-list')
+       <table class="table table-primary table-hover">
+  <tr class="table-secondary">
+    <th scope="col">id</th>
+    <th scope="col">Role</th>
+  </tr>
+  <ol class="list-group-numbered">
+  @foreach ($role as $x)
+  <tr>
+    <td>{{$x->id}}</td>
+    <td>{{ $x->role }}</td> 
+  </tr>
+  @endforeach
+  </ol>
+</table>
+
        </div>
       <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
-    <!-- @include('components.footer') -->
-
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
       <!-- Control sidebar content goes here -->
     </aside>
     <!-- /.control-sidebar -->
   </div>
   <!-- ./wrapper -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    // Menghilangkan alert setelah 3 detik
-    setTimeout(function() {
-        var alert = document.getElementById('alert'); // ID sesuai dengan elemen HTML
-        if (alert) {
-            alert.style.transition = "opacity 0.5s ease";
-            alert.style.opacity = "0";
-            setTimeout(function() {
-                alert.style.display = 'none'; // Hapus elemen dari tampilan setelah transisi
-            }, 500); // Waktu tambahan untuk transisi efek fade out
-        }
-    }, 2000); // Waktu sebelum alert mulai menghilang (3 detik)
-});
-  </script>
+ 
+
 </body>
 
 </html>

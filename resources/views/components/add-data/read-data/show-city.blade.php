@@ -19,6 +19,7 @@
     <div class="fw-bold">{{ $data->city_name }}</div>
   </div>
   <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
+  @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 )
   <div class="between">
     <!-- <button  type="submit" class="btn btn-primary">Edit</button> -->
     <a href="{{ route('add-city.edit', $data->id) }}" class="btn btn-info">Edit</a>
@@ -30,6 +31,7 @@
             </button>
         </form>
   </div>
+  @endif
 </li>
 @endforeach
 

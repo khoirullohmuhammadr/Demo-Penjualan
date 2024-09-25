@@ -82,6 +82,27 @@
                     @error('cities_id')
                         <small class="text-danger">{{ $message }}</small>
                     @enderror
+                    
+                </div>
+
+                <div class="form-group">
+                    <label for="inputStatus">Role</label>
+                       
+                    <select id="inputStatus" class="form-control custom-select" name="role_id">
+                        <option value="" disabled>Select one</option>
+                        @foreach ($role as $c)
+                        @if ($c->id != 1)
+                        <option value="{{ $c->id }}" {{ (isset($user) && $c->id == $user->role_id) ? 'selected' : '' }}>
+                            {{ $c->role }}
+                        </option>
+                        @endif
+                    @endforeach
+
+                    </select>
+                    @error('role_id')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
+                    
                 </div>
                 <div class="row">
                     <div class="col-12">

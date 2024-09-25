@@ -34,7 +34,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Project Add</h1>
+              <h1>User List</h1>
             </div>
         
             <div class="col-sm-6">
@@ -67,13 +67,13 @@
   <!-- ./wrapper -->
 
   <!-- jQuery -->
-  <script src="{{asset('admin lte/plugins/jquery/jquery.min.js')}}"></script>
+  <!-- <script src="{{asset('admin lte/plugins/jquery/jquery.min.js')}}"></script> -->
   <!-- Bootstrap 4 -->
-  <script src="{{asset('admin lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <!-- <script src="{{asset('admin lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script> -->
   <!-- AdminLTE App -->
-  <script src="{{asset('admin lte/dist/js/adminlte.min.js')}}"></script>
+  <!-- <script src="{{asset('admin lte/dist/js/adminlte.min.js')}}"></script> -->
   <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('admin lte/dist/js/demo.js')}}"></script>
+  <!-- <script src="{{asset('admin lte/dist/js/demo.js')}}"></script> -->
   <script>
     document.addEventListener('DOMContentLoaded', function() {
     // Menghilangkan alert setelah 3 detik

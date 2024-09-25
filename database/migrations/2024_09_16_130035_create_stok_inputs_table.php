@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('products_id')->constrained('products')->onDelete('cascade');
             $table->integer('stok');
-            $table->date('input_date');
+            $table->timestamp('input_date')->useCurrent();
             $table->timestamps();
         });
     }

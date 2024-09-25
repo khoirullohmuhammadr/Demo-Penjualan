@@ -21,6 +21,7 @@
   <!-- <span class="badge text-bg-primary rounded-pill">14</span> -->
   <div class="between">
     <!-- <button  type="submit" class="btn btn-primary">Edit</button> -->
+    @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 ||Auth::user()->role_id == 3 )
     <a href="{{ route('add-product.edit', $data->id) }}" class="btn btn-info">Edit</a>
     <form action="{{ route('add-product.delete', $data->id) }}" method="POST" style="display:inline-block;">
             @csrf
@@ -29,6 +30,8 @@
                 Delete
             </button>
         </form>
+        @else
+        @endif
         <button class="btn btn-outline-primary btn-details" data-id="{{ $data->id }}">Details</button>
   </div>
 </li>
@@ -42,7 +45,7 @@
             <img src="{{ asset('images/products/'. $data->image) }}" class="card-img-top" alt="{{ $data->product_name }}">
         </li>
     </ul>
-
+    @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 ||Auth::user()->role_id == 3 )
     <div class="card-body">
         <a href="{{ route('add-product.edit', $data->id) }}" class="btn btn-info">Edit</a>
         <form action="{{ route('add-product.delete', $data->id) }}" method="POST" style="display:inline-block;">
@@ -51,6 +54,8 @@
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
     </div>
+    @else
+    @endif
   </div>
 @endforeach
 

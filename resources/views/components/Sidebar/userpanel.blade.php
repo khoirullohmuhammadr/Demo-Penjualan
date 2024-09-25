@@ -5,6 +5,10 @@
         <div class="info">
         @if(auth()->check())
             <a href="#" class="d-block">{{ auth()->user()->email }}</a>
+            <div class="flex text-white">
+              <p>You Log in as:</p>
+              <a href="#" class="d-block">{{ auth()->user()->role->role }}</a>
+            </div>
         @else
             <a href="#" class="d-block">Guest(not login yet)</a>
         @endif

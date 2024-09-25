@@ -34,7 +34,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Project Add</h1>
+              <h1>City Management</h1>
             </div>
   
           </div>
@@ -44,6 +44,7 @@
       <!-- Main content -->
       <section class="content">
         <div class="row">
+        @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 )
           <div class="col-md-6">
             <form class="card card-primary"
               action="{{ isset($editCity) ? route('add-city.update', $editCity->id) : route('add-city.create') }}"
@@ -76,13 +77,13 @@
                 </div>
               </div>
             </form>
-
+          @else
             @if (session('success'))
         <div id="alert" class="alert alert-success">
           {{ session('success') }}
         </div>
       @endif
-
+@endif
             <!-- /.card -->
           </div>
           @include('components.add-data.read-data.show-city')
@@ -103,14 +104,7 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- jQuery -->
-  <script src="{{asset('admin lte/plugins/jquery/jquery.min.js')}}"></script>
-  <!-- Bootstrap 4 -->
-  <script src="{{asset('admin lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <!-- AdminLTE App -->
-  <script src="{{asset('admin lte/dist/js/adminlte.min.js')}}"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('admin lte/dist/js/demo.js')}}"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', function () {
       // Menghilangkan alert setelah 3 detik

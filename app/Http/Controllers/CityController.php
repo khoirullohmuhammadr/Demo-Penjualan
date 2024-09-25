@@ -2,13 +2,19 @@
 
 namespace App\Http\Controllers;
 
+
 use Illuminate\Http\Request;
 use App\Models\City;
+use Illuminate\Support\Facades\Auth;
 
 
 class CityController extends Controller
 {
     public function index($id = null) {
+
+
+        // dd(session()->all());
+        // dd(Auth::user());
         $city = City::all();
         $editCity = $id ? City::findOrFail($id) : null;
         

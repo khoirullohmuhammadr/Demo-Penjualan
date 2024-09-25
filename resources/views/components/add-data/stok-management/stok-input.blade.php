@@ -34,7 +34,7 @@
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <h1>Product Management</h1>
+              <h1>Add Stok</h1>
             </div>
        
           </div>
@@ -78,14 +78,14 @@
                     <div class="text-danger">{{ $message }}</div>
                   @enderror
                 </div>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <label for="inputName">Input Date</label>
                   <input type="date" id="inputName" name="input_date" class="form-control"
                     value="{{ old('input_date', $stok->input_date ?? '') }}" required>
                   @error('input_date')
                     <div class="text-danger">{{ $message }}</div>
                   @enderror
-                </div>
+                </div> -->
 
                 <!-- Image Upload -->
         
@@ -135,7 +135,7 @@
   <!-- AdminLTE App -->
   <script src="{{asset('admin lte/dist/js/adminlte.min.js')}}"></script>
   <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('admin lte/dist/js/demo.js')}}"></script>
+  <!-- <script src="{{asset('admin lte/dist/js/demo.js')}}"></script> -->
 
   <!-- Alert auto-hide -->
   <script>

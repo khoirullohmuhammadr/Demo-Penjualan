@@ -44,6 +44,7 @@
       <!-- Main content -->
       <section class="content">
         <div class="row">
+        @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 ||Auth::user()->role_id == 3)
           <div class="col-md-6">
             <form class="card card-primary"
               action="{{ isset($editProduct) ? route('add-product.update', $editProduct->id) : route('add-product.store') }}"
@@ -98,7 +99,9 @@
             @endif
 
           </div>
-
+          @else
+            
+          @endif
           <!-- Product List Component -->
           @include('components.add-data.product-management.show-product')
 
@@ -119,14 +122,7 @@
   </div>
   <!-- ./wrapper -->
 
-  <!-- jQuery -->
-  <script src="{{asset('admin lte/plugins/jquery/jquery.min.js')}}"></script>
-  <!-- Bootstrap 4 -->
-  <script src="{{asset('admin lte/plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-  <!-- AdminLTE App -->
-  <script src="{{asset('admin lte/dist/js/adminlte.min.js')}}"></script>
-  <!-- AdminLTE for demo purposes -->
-  <script src="{{asset('admin lte/dist/js/demo.js')}}"></script>
+
 
   <!-- Alert auto-hide -->
   <script>

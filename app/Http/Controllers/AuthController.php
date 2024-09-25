@@ -51,22 +51,22 @@ class AuthController extends Controller
     // Redirect ke halaman login dengan pesan
     return redirect()->route('login')->with('alert-message', 'You have been logged out.');
     }
+     //fungsi register dihapus
+    // public function signup(Request $request){
+    //  $request->validate([
+    //     'email'=>'required|email|string|max:50|unique:users',
+    //     'password'=>'required|max:50',
+    //  ]);
 
-    public function signup(Request $request){
-     $request->validate([
-        'email'=>'required|email|string|max:50|unique:users',
-        'password'=>'required|max:50',
-     ]);
-
-    $user = new User();
+    // $user = new User();
     
-    $user->email = $request->email;
-    $user->password = Hash::make($request->password);
+    // $user->email = $request->email;
+    // $user->password = Hash::make($request->password);
 
-    $user->save();
+    // $user->save();
 
-     return redirect()->route('login')->with('alert-signup', 'You have been Registered');
-    }
+    //  return redirect()->route('login')->with('alert-signup', 'You have been Registered');
+    // }
     public function dashboard(){
         return view('dashboard');
     }

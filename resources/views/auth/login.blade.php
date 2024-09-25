@@ -92,12 +92,12 @@ document.addEventListener('DOMContentLoaded', function() {
         
         <div class="row">
           <div class="col-8">
-            <div class="icheck-primary">
+            <!-- <div class="icheck-primary">
               <input type="checkbox" name="remember" id="remember">
               <label for="remember">
                 Remember Me
               </label>
-            </div>
+            </div> -->
           </div>
           <!-- /.col -->
           <div class="col-4">
@@ -109,10 +109,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- /.social-auth-links -->
 
-      <p class="mb-1">
+      <!-- <p class="mb-1">
       does'nt have an account?
         <a href="/register">Sign Up</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>

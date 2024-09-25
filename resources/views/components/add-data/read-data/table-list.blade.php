@@ -4,6 +4,7 @@
     <th scope="col">Name</th>
     <th scope="col">Email</th>
     <th scope="col">Primary City</th>
+    <th scope="col">Role</th>
     <th scope="col">Action</th>
   </tr>
   <ol class="list-group-numbered">
@@ -13,21 +14,30 @@
     <td>{{ $x->name }}</td>
     <td>{{ $x->email }}</td>
     <td>{{ $x->city->city_name }}</td> 
+    <td>{{ $x->role->role }}</td> 
     <td>
-        <div class="between">
-            <a href="{{ route('add-user.edit', $x->id) }}" class="btn btn-info">Edit</a>
-            <form action="{{ route('user-list.delete', $x->id) }}" method="POST" style="display:inline-block;">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-            <!-- Tombol Details -->
-            <button class="btn btn-outline-primary btn-details" data-id="{{ $x->id }}">Details</button>
-        </div>
-    </td>
+    <div class="between">
+        @if (Auth::user()->role_id == 1 || Auth::user()->role_id == 2)
+            <!-- Cek jika user dengan role_id == 1 (Super Admin), hanya super admin lain yang bisa edit atau delete -->
+            @if ($x->role_id != 1 || Auth::user()->role_id == 1)
+                <a href="{{ route('add-user.edit', $x->id) }}" class="btn btn-info">Edit</a>
+                <form action="{{ route('user-list.delete', $x->id) }}" method="POST" style="display:inline-block;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            @endif
+        @endif
+
+        <!-- Tombol Details, selalu muncul -->
+        <button class="btn btn-outline-primary btn-details" data-id="{{ $x->id }}">Details</button>
+    </div>
+</td>
+
   </tr>
 
   <!-- Detail popup untuk setiap user -->
+
   <div id="user-detail-{{ $x->id }}" class="card user-detail-card hidden" style="width: 18rem;">
     <button class="btn-close"></button>
     <ul class="list-group list-group-flush">
@@ -39,17 +49,19 @@
         <li class="list-group-item"><strong>Birthday:</strong> {{ $x->birthday }}</li>
         <li class="list-group-item"><strong>City:</strong> {{ $x->city->city_name }}</li>
     </ul>
-
-    <div class="card-body">
+    <div class="card-body">     
+    @if(Auth::user()->role_id == 1 ||Auth::user()->role_id == 2 )
         <a href="{{ route('add-user.edit', $x->id) }}" class="btn btn-info">Edit</a>
         <form action="{{ route('user-list.delete', $x->id) }}" method="POST" style="display:inline-block;">
             @csrf
             @method('DELETE')
             <button type="submit" class="btn btn-danger">Delete</button>
         </form>
+        @else
+        @endif
+        <p></p>
     </div>
   </div>
-
   @endforeach
   </ol>
 </table>
