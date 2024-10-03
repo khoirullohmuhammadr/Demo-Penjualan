@@ -4,15 +4,18 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-bold">Dashboard</h1>
+            <!-- <h1 class="m-0 text-bold">Dashboard</h1> -->
 
             @if(session('success'))
     <div id="alert" class="alert alert-success">
         {{ session('success') }}
     </div>
 @endif
-          
-
+        
+<div class="container">
+<h3 class="m-0 text-bold">Sells Report</h3>
+  @include('components.sell-report')
+</div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Menghilangkan alert setelah 3 detik

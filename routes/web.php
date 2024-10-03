@@ -8,6 +8,7 @@ use App\Http\Controllers\StokController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Api\ProductControllerApi;
 
 // Authentication routes
 Route::get('/', [AuthController::class, 'index'])->name('login');
@@ -85,6 +86,6 @@ Route::prefix('add-city')->middleware(['auth','role'])->group(function () {
 
 // Protected route
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/dashboard', [ProductControllerApi::class, 'dashboard'])->name('dashboard');
     
 });

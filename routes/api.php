@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\AuthControllerApi;
@@ -17,31 +18,40 @@ use App\Http\Controllers\Api\ProductControllerApi;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::prefix('/login')->group(function(){
+//   Route::get('/' ,[AuthControllerApi::class, 'index']);
+//   Route::post('/auth' ,[AuthControllerApi::class, 'login']);
+// });
+
+Route::post('/login', function (Request $request) {
+    $user = User::where('email', $request->email)->first();
+
+    if (! $user || ! Hash::check($request->password, $user->password)) {
+        return response()->json([
+            'message' => 'Invalid login details'
+        ], 401);
+    }
+
+    // Generate token
+    $token = $user->createToken('API Token')->plainTextToken;
+
+    return response()->json([
+        'status'=>true,
+        'message'=>'successfully log in',
+        'token' => $token
+    ]);
 });
 
-Route::group(["middleware" => ["auth:sanctum"]
-], 
-//Route Show User Login according the bearer token
-function(){
-Route::get('/profile', [AuthControllerApi::class, 'profile']);
-}
-);
+Route::post('/logout', function (Request $request) {
+    $request->user()->currentAccessToken()->delete();
 
-Route::get('/', [AuthControllerApi::class, 'index'])->name('login');
-Route::post('/login', [AuthControllerApi::class, 'login']);
-Route::post('/auth', [AuthControllerApi::class, 'auth']);
-
-
-//Route Management User 
-Route::prefix('add-user')->group(function () {
-    Route::get('/', [UserControllerApi::class, 'index'])->name('add-user');
-    Route::post('/store', [UserControllerApi::class, 'store'])->name('add-user.store');
+    return response()->json(['message' => 'Logged out']);
 });
 
+Route::middleware('auth:sanctum')->get('/list-product', [ProductControllerApi::class, 'index']);
+Route::middleware('auth:sanctum')->post('/sell-product', [ProductControllerApi::class, 'sell']);
 //Route Management Product
-Route::prefix('add-product')->group(function () {
-    Route::get('/', [ProductControllerApi::class, 'index']);
+// Route::prefix('list-product')->middleware(['auth:sanctum', 'role:sales'])->group(function () {
+//     Route::get('/', [ProductControllerApi::class, 'index']);
    
-});
+// });

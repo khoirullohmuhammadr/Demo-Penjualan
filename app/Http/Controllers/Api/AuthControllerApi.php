@@ -16,6 +16,13 @@ class AuthControllerApi extends Controller
      */
     public function index()
     {
+        if (!Auth::check()) {
+            return response()->json([
+                'status' => false,
+                'message' => 'You need to log in to access this resource.',
+            ], 401);
+        }
+        
         return response()->json([
             'user'=>User::latest()->get(),
             'message'=>'User List',

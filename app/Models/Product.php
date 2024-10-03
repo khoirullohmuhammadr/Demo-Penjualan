@@ -13,6 +13,11 @@ class Product extends Model
     {
         return $this->belongsTo(StokInput::class, 'products_id');
     }
+    public function sell()
+    {
+        return $this->belongsTo(Sell::class, 'sells_id');
+    }
+
     protected $table = 'products';
     protected $fillable = [
         'product_name',
